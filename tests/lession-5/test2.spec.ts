@@ -12,6 +12,7 @@ test.describe("Exercise add product in Product page", () => {
     await test.step("Go to product page", async () => {
       await page.goto(URL);
       await page.locator("//a[contains(text(),'Product page')]").click();
+      await page.waitForLoadState("networkidle");
     });
 
     await test.step("Add product", async () => {
@@ -32,10 +33,10 @@ test.describe("Exercise add product in Product page", () => {
       }
     });
 
-    await test.step("Verify the result table", () => {
+    await test.step("Verify the result table", async () => {
       let grandTotal: number = 0;
 
-      PRODUCTS.forEach((product) => {
+      for (const product of PRODUCTS) {
         const subTotal = product.PRODUCT_QUANTITY * product.PRODUCT_PRICE;
         grandTotal += subTotal;
 
@@ -48,9 +49,8 @@ test.describe("Exercise add product in Product page", () => {
 
         expect(quantityCell).toHaveText(product.PRODUCT_QUANTITY.toString());
         expect(productNameCell).toContainText(subTotal.toString());
-      });
-
-      expect(page.locator('//td[@class="total-price"]')).toContainText(
+      }
+      await expect(page.locator('//td[@class="total-price"]')).toContainText(
         grandTotal.toString()
       );
     });
