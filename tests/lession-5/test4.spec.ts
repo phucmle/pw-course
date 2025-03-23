@@ -8,16 +8,19 @@ interface Article {
 }
 let articles = [] as Article[];
 const numberOfArticles = 10;
+const numberOfSearchCharacters = 20;
 
 test.describe("Exercise add note in Personal note page", () => {
   test("Personal note page", async ({ page }) => {
     const personalNoteHref = page.locator(
       "//a[contains(text(),'Personal notes')]"
     );
+    const searchInput = page.locator("//*[@id='search']");
     const titleInput = page.locator("//*[@id='note-title']");
     const contentInput = page.locator("//*[@id='note-content']");
     const addButton = page.locator("//*[@id='add-note']");
     const noteCount = page.locator("//*[@id='note-count']");
+    const searchResults = page.locator("//*[@id='notes-list']");
 
     async function getArticles(numberOfNotes: number) {
       //Get all articles
@@ -49,6 +52,20 @@ test.describe("Exercise add note in Personal note page", () => {
       }
     }
 
+    function getSearchTerm(
+      articles: Article[],
+      searchField: "title" | "content",
+      numberOfSearchCharacters: number
+    ) {
+      //Get search term by random title or content of article
+      const randomArt = articles[Math.floor(Math.random() * articles.length)];
+      const searchTerm = randomArt[searchField].slice(
+        0,
+        numberOfSearchCharacters
+      );
+      return searchTerm;
+    }
+
     await test.step("Go to Zing news", async () => {
       await page.goto(ZING_URL);
       await page.waitForLoadState("networkidle");
@@ -76,11 +93,27 @@ test.describe("Exercise add note in Personal note page", () => {
     });
 
     await test.step("Verify searching by title", async () => {
-      //In-progress
+      const searchTerm = getSearchTerm(
+        articles,
+        "title",
+        numberOfSearchCharacters
+      );
+      await searchInput.fill(searchTerm);
+      const firstResult = await searchResults.first().innerText();
+
+      expect(firstResult).toContain(searchTerm);
     });
 
     await test.step("Verify searching by content", async () => {
-      //In-progress
+      const searchTerm = getSearchTerm(
+        articles,
+        "content",
+        numberOfSearchCharacters
+      );
+      await searchInput.fill(searchTerm);
+      const firstResult = await searchResults.first().innerText();
+
+      expect(firstResult).toContain(searchTerm);
     });
   });
 });
