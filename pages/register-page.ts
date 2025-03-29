@@ -13,18 +13,80 @@ export class RegisterPage extends BasePage {
     super(page);
   }
 
-  xUserName = "//table[@id='userTable']//td[2]";
-  xEmail = "//table[@id='userTable']//td[3]";
-  xInformation = "//table[@id='userTable']//td[4]";
+  xUserNameInput = "//input[@id='username']";
+  xEmailInput = "//input[@id='email']";
+  xGenderInput = (gender: string = "male" || "female") => {
+    return `//input[@id='${gender}']`;
+  };
+  xHobbies = (hobbie: string) => {
+    return `//input[@id='${hobbie}']`;
+  };
+  xInterests = "//select[@id='interests']";
+  xCountry = "//select[@id='country']";
+  xDOB = "//input[@id='dob']";
+  xProfile = "//input[@id='profile']";
+  xBio = "//textarea[@id='bio']";
+  xRating = "//input[@id='rating']";
+  xFavourite = "//input[@id='favcolor']";
+  xNewsLetter = "//input[@id='newsletter']";
+  xToggleOption = "//span[@class='slider round']";
+  xSubmitBtn = "//button[@type='submit']";
+
+  xUserNameResult = "//table[@id='userTable']//td[2]";
+  xEmailResult = "//table[@id='userTable']//td[3]";
+  xInformationResult = "//table[@id='userTable']//td[4]";
+
+  userNameInput = () => {
+    return this.page.locator(this.xUserNameInput);
+  };
+  emailInput = () => {
+    return this.page.locator(this.xEmailInput);
+  };
+  genderInput = (gender: string) => {
+    return this.page.locator(this.xGenderInput(gender));
+  };
+  hobbiesInput = (hobbie: string) => {
+    return this.page.locator(this.xHobbies(hobbie));
+  };
+  interestsInput = () => {
+    return this.page.locator(this.xInterests);
+  };
+  countryInput = () => {
+    return this.page.locator(this.xCountry);
+  };
+  dobInput = () => {
+    return this.page.locator(this.xDOB);
+  };
+  profileInput = () => {
+    return this.page.locator(this.xProfile);
+  };
+  bioInput = () => {
+    return this.page.locator(this.xBio);
+  };
+  ratingInput = () => {
+    return this.page.locator(this.xRating);
+  };
+  favouriteInput = () => {
+    return this.page.locator(this.xFavourite);
+  };
+  newsLetterInput = () => {
+    return this.page.locator(this.xNewsLetter);
+  };
+  toggleOptionInput = () => {
+    return this.page.locator(this.xToggleOption);
+  };
+  submitBtn = () => {
+    return this.page.locator(this.xSubmitBtn);
+  };
 
   emailResult = () => {
-    return this.page.locator(this.xEmail);
+    return this.page.locator(this.xEmailResult);
   };
   userNameResult = () => {
-    return this.page.locator(this.xUserName);
+    return this.page.locator(this.xUserNameResult);
   };
   informationResult = () => {
-    return this.page.locator(this.xInformation);
+    return this.page.locator(this.xInformationResult);
   };
 
   openRegisterPage = async () => {
@@ -35,39 +97,37 @@ export class RegisterPage extends BasePage {
   fillRegisterForm = async (userInformations: IUserInformation) => {
     selectors.setTestIdAttribute("id");
     //Username
-    await this.page.getByTestId("username").fill(userInformations.userName);
+    await this.userNameInput().fill(userInformations.userName);
     //Email
-    await this.page.getByTestId("email").fill(userInformations.email);
+    await this.emailInput().fill(userInformations.email);
     //Gender
-    await this.page.getByTestId(userInformations.gender).setChecked(true);
+    await this.genderInput(userInformations.gender).setChecked(true);
     //Hobbies
     for (const hobbie of userInformations.hobbies) {
-      await this.page.getByTestId(hobbie).setChecked(true);
+      await this.hobbiesInput(hobbie).setChecked(true);
     }
     //Interests
-    await this.page
-      .getByTestId("interests")
-      .selectOption([{ label: "Technology" }, { label: "Music" }]);
+    await this.interestsInput().selectOption([
+      { label: "Technology" },
+      { label: "Music" },
+    ]);
     //Country
-    await this.page.getByTestId("country").selectOption("Canada");
+    await this.countryInput().selectOption("Canada");
     //DOB
-    await this.page.getByTestId("dob").fill("2024-03-18");
+    await this.dobInput().fill("2024-03-18");
     //Profile picture
-    await this.page
-      .getByTestId("profile")
-      .setInputFiles("playwright.config.ts");
+    await this.profileInput().setInputFiles("playwright.config.ts");
     //Biography
-    await this.page.getByTestId("bio").fill("bio 1111");
-    await this.page.getByTestId("bio").fill("bio 2222");
+    await this.bioInput().fill("bio 22222");
     //Rate us
-    await this.page.getByTestId("rating").fill("1");
+    await this.ratingInput().fill("1");
     //Favorite color
-    await this.page.getByTestId("favcolor").fill("#111111");
+    await this.favouriteInput().fill("#111111");
     //Newsletter
-    await this.page.getByTestId("newsletter").check();
+    await this.newsLetterInput().check();
     //Enable feauture
-    await this.page.locator('//span[@class="slider round"]').check();
+    await this.toggleOptionInput().setChecked(true);
     //Register
-    await this.page.locator("//button[@type='submit']").click();
+    await this.submitBtn().click();
   };
 }
