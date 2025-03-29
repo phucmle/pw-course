@@ -13,8 +13,8 @@ export class RegisterPage extends BasePage {
     super(page);
   }
 
-  xEmail = "//table[@id='userTable']//td[2]";
-  xUserName = "//table[@id='userTable']//td[3]";
+  xUserName = "//table[@id='userTable']//td[2]";
+  xEmail = "//table[@id='userTable']//td[3]";
   xInformation = "//table[@id='userTable']//td[4]";
 
   emailResult = () => {
@@ -28,8 +28,7 @@ export class RegisterPage extends BasePage {
   };
 
   openRegisterPage = async () => {
-    // await this.openMainPage();
-    await this.page.goto("/");
+    await this.openMainPage();
     await this.page.locator("//a[contains(text(),'Register Page')]").click();
   };
 

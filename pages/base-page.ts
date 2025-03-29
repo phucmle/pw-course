@@ -13,6 +13,5 @@ export class BasePage {
 
   openMainPage = async () => {
     await this.page.goto("/");
-    await this.page.waitForLoadState("networkidle");
   };
 }

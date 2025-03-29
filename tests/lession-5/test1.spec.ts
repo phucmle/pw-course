@@ -22,12 +22,10 @@ test.describe("Exercise input in Register page", () => {
     });
 
     await test.step("Verify results table", () => {
-      expect(registerPage.emailResult()).toHaveText(
+      expect(registerPage.userNameResult()).toHaveText(
         testUserInformations.userName
       );
-      expect(registerPage.informationResult()).toHaveText(
-        testUserInformations.email
-      );
+      expect(registerPage.emailResult()).toHaveText(testUserInformations.email);
       expect(registerPage.informationResult()).toContainText(
         `Gender: ${testUserInformations.gender}`
       );
