@@ -1,58 +1,40 @@
 import test, { expect } from "@playwright/test";
+import { ProductPage } from "../pages/product-page";
 
-const URL = "https://material.playwrightvn.com/";
-const PRODUCTS = [
-  { PRODUCT_NAME: "Product 1", PRODUCT_PRICE: 10, PRODUCT_QUANTITY: 5 },
-  { PRODUCT_NAME: "Product 2", PRODUCT_PRICE: 20, PRODUCT_QUANTITY: 3 },
-  { PRODUCT_NAME: "Product 3", PRODUCT_PRICE: 30, PRODUCT_QUANTITY: 1 },
+const products = [
+  { name: "Product 1", price: 10, quantity: 5 },
+  { name: "Product 2", price: 20, quantity: 3 },
+  { name: "Product 3", price: 30, quantity: 1 },
 ];
 
 test.describe("Exercise add product in Product page", () => {
   test("Product page", async ({ page }) => {
+    const productPage = new ProductPage(page);
+
     await test.step("Go to product page", async () => {
-      await page.goto(URL);
-      await page.locator("//a[contains(text(),'Product page')]").click();
-      await page.waitForLoadState("networkidle");
+      await productPage.openProductPage();
     });
 
     await test.step("Add product", async () => {
-      for (const product of PRODUCTS) {
-        try {
-          const addButton = page.locator(
-            `//div[text()='${product.PRODUCT_NAME}']/following-sibling::button`
-          );
-          await addButton.waitFor({ state: "visible" });
-          await addButton.click({
-            clickCount: product.PRODUCT_QUANTITY,
-            delay: 100,
-          });
-        } catch (error) {
-          console.error(`Failed to add product for ${product.PRODUCT_NAME}`);
-          throw error;
-        }
-      }
+      await productPage.addProducts(products);
     });
 
     await test.step("Verify the result table", async () => {
-      let grandTotal: number = 0;
+      let grandTotal = 0;
+      const totalPrice = productPage.totalPrice();
 
-      for (const product of PRODUCTS) {
-        const subTotal = product.PRODUCT_QUANTITY * product.PRODUCT_PRICE;
+      for (const product of products) {
+        const subTotal = product.quantity * product.price;
         grandTotal += subTotal;
 
-        const quantityCell = page.locator(
-          `//td[text()='${product.PRODUCT_NAME}']/following-sibling::td[2]`
-        );
-        const productNameCell = page.locator(
-          `//td[text()='${product.PRODUCT_NAME}']/following-sibling::td[3]`
-        );
+        const cartProductName = productPage.cartProductName(product.name);
+        const cartQuantity = productPage.cartQuantity(product.name);
 
-        expect(quantityCell).toHaveText(product.PRODUCT_QUANTITY.toString());
-        expect(productNameCell).toContainText(subTotal.toString());
+        expect(cartProductName).toContainText(subTotal.toString());
+        expect(cartQuantity).toHaveText(product.quantity.toString());
       }
-      await expect(page.locator('//td[@class="total-price"]')).toContainText(
-        grandTotal.toString()
-      );
+
+      await expect(totalPrice).toContainText(grandTotal.toString());
     });
   });
 });
