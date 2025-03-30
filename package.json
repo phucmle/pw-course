@@ -2,7 +2,14 @@
   "name": "pw-course",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+    "scripts": {
+      "test:all": "npx playwright test",
+      "test:ui": "npx playwright test --ui",
+      "test:headed": "npx playwright test $1 --headed",
+      "test:headed:all": "npx playwright test --headed",
+      "test:debug": "npx playwright test $1 --debug",
+      "test:report": "npx playwright show-report"
+    },
   "keywords": [],
   "author": "",
   "license": "ISC",

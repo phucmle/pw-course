@@ -1,5 +1,6 @@
 import test, { expect, selectors } from "@playwright/test";
-import { RegisterPage } from "../../pages/register-page";
+import { RegisterPage } from "../pages/register-page";
+
 const testUserInformations = {
   userName: "felix",
   email: "felix_test@gmail.com",

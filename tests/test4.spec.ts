@@ -68,7 +68,6 @@ test.describe("Exercise add note in Personal note page", () => {
 
     await test.step("Go to Zing news", async () => {
       await page.goto(ZING_URL);
-      await page.waitForLoadState("networkidle");
     });
 
     await test.step("Get articles from zing news", async () => {
