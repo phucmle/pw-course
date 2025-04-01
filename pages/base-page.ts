@@ -14,4 +14,8 @@ export class BasePage {
   openMainPage = async () => {
     await this.page.goto("/");
   };
+
+  goToPage = async (pageName: string) => {
+    await this.page.locator(`//a[contains(text(),'${pageName}')]`).click();
+  };
 }

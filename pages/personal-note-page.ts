@@ -7,6 +7,7 @@ export class PersonalNotePage extends BasePage {
     super(page);
   }
 
+  //xpaths
   xTitleInput = "//input[@id='note-title']";
   xContentInput = "//textarea[@id='note-content']";
   xAddBtn = "//button[@id='add-note']";
@@ -14,6 +15,7 @@ export class PersonalNotePage extends BasePage {
   xSearchInput = "//*[@id='search']";
   xSearchResults = "//*[@id='notes-list']";
 
+  //locators
   titleInput = this.page.locator(this.xTitleInput);
   contentInput = this.page.locator(this.xContentInput);
   addButton = this.page.locator(this.xAddBtn);
@@ -21,9 +23,10 @@ export class PersonalNotePage extends BasePage {
   searchInput = this.page.locator(this.xSearchInput);
   searchResults = this.page.locator(this.xSearchResults);
 
+  //functions
   openPersonalNotePage = async () => {
     await this.openMainPage();
-    await this.page.locator("//a[contains(text(),'Personal notes')]").click();
+    await this.goToPage("Personal notes");
   };
 
   addNotesWithArticles = async (articles: IArticle[]) => {

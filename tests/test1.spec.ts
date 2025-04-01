@@ -23,16 +23,16 @@ test.describe("Exercise input in Register page", () => {
     });
 
     await test.step("Verify results table", () => {
-      expect(registerPage.userNameResult()).toHaveText(
-        testUserInformations.userName
-      );
-      expect(registerPage.emailResult()).toHaveText(testUserInformations.email);
-      expect(registerPage.informationResult()).toContainText(
+      const userNameResult = registerPage.userNameResult;
+      const emailResult = registerPage.emailResult;
+      const informationResult = registerPage.informationResult;
+
+      expect(userNameResult).toHaveText(testUserInformations.userName);
+      expect(emailResult).toHaveText(testUserInformations.email);
+      expect(informationResult).toContainText(
         `Gender: ${testUserInformations.gender}`
       );
-      expect(registerPage.informationResult()).toContainText(
-        `Hobbies: ${hobbiesText}`
-      );
+      expect(informationResult).toContainText(`Hobbies: ${hobbiesText}`);
     });
   });
 });

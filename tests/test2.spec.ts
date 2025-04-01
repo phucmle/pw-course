@@ -21,7 +21,7 @@ test.describe("Exercise add product in Product page", () => {
 
     await test.step("Verify the result table", async () => {
       let grandTotal = 0;
-      const totalPrice = productPage.totalPrice();
+      const totalPrice = productPage.totalPrice;
 
       for (const product of products) {
         const subTotal = product.quantity * product.price;

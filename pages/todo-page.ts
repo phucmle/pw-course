@@ -6,41 +6,36 @@ export class ToDoPage extends BasePage {
     super(page);
   }
 
+  //xpaths
   xTaskInput = '//input[@id="new-task"]';
   xAddTaskBtn = '//button[@id="add-task"]';
   xDeleteBtns = '//button[contains(@id,"delete")]';
 
-  taskInput = () => {
-    return this.page.locator(this.xTaskInput);
-  };
+  //locators
+  taskInput = this.page.locator(this.xTaskInput);
+  addTaskBtn = this.page.locator(this.xAddTaskBtn);
+  deleteButtons = this.page.locator(this.xDeleteBtns);
 
-  addTaskBtn = () => {
-    return this.page.locator(this.xAddTaskBtn);
-  };
-
-  deleteButtons = () => {
-    return this.page.locator(this.xDeleteBtns);
-  };
-
+  //functions
   getBtnId = (btn: Locator) => {
     return btn.getAttribute("id");
   };
 
   openToDoPage = async () => {
     await this.openMainPage();
-    await this.page.locator("//a[contains(text(),'Todo page')]").click();
+    await this.goToPage("Todo page");
   };
 
   addTasks = async (numberOfTasks: number, taskPrefix: string = "Todo ") => {
     for (let i = 1; i <= numberOfTasks; i++) {
       const taskName = taskPrefix + i;
-      await this.taskInput().fill(taskName);
-      await this.addTaskBtn().click();
+      await this.taskInput.fill(taskName);
+      await this.addTaskBtn.click();
     }
   };
 
   deleteOddTasks = async () => {
-    const deleteButtons = await this.deleteButtons().all();
+    const deleteButtons = await this.deleteButtons.all();
 
     // Common issue when trying to delete elements in a loop while using a pre-collected list of locators.
     // The problem occurs because the DOM structure changes after each deletion, making the original locators invalid

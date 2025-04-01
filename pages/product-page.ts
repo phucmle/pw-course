@@ -12,39 +12,34 @@ export class ProductPage extends BasePage {
     super(page);
   }
 
+  //xpaths
   xAddBtn = (name: string) => {
     return `//div[text()='${name}']/following-sibling::button`;
   };
-
   xCartQuantity = (name: string) => {
     return `//td[text()='${name}']/following-sibling::td[2]`;
   };
-
   xProductName = (name: string) => {
     return `//td[text()='${name}']/following-sibling::td[3]`;
   };
-
   xTotalPrice = '//td[@class="total-price"]';
 
+  //locators
   addBtn = (name: string) => {
     return this.page.locator(this.xAddBtn(name));
   };
-
   cartQuantity = (name: string) => {
     return this.page.locator(this.xCartQuantity(name));
   };
-
   cartProductName = (name: string) => {
     return this.page.locator(this.xProductName(name));
   };
+  totalPrice = this.page.locator(this.xTotalPrice);
 
-  totalPrice = () => {
-    return this.page.locator(this.xTotalPrice);
-  };
-
+  //functions
   openProductPage = async () => {
     await this.openMainPage();
-    await this.page.locator("//a[contains(text(),'Product page')]").click();
+    await this.goToPage("Product page");
   };
 
   addProduct = async (product: IProduct) => {

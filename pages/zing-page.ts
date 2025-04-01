@@ -13,10 +13,13 @@ export class ZingPage extends BasePage {
 
   zingUrl = "https://znews.vn/";
 
+  //xpath
   xArticles = "//article[contains(@class,article-item)]";
 
+  //locator
   articles = this.page.locator(this.xArticles);
 
+  //functions
   openZingPage = async () => {
     await this.navigateTo(this.zingUrl);
   };
