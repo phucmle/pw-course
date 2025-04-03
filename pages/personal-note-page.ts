@@ -46,12 +46,9 @@ export class PersonalNotePage extends BasePage {
     const randomIndex = Math.floor(Math.random() * articles.length);
     const randomArticle = articles[randomIndex];
 
-    const searchTerm = randomArticle[searchBy].slice(
-      0,
-      numberOfSearchCharacters
-    );
+    let searchTerm = randomArticle[searchBy].slice(0, numberOfSearchCharacters);
 
-    return searchTerm;
+    return searchTerm.trim();
   };
 
   searchByKeyword = async (keyword: string) => {

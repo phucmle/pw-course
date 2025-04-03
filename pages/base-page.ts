@@ -17,5 +17,6 @@ export class BasePage {
 
   goToPage = async (pageName: string) => {
     await this.page.locator(`//a[contains(text(),'${pageName}')]`).click();
+    await this.page.waitForLoadState("networkidle");
   };
 }
