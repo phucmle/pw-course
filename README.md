@@ -53,6 +53,12 @@ npm run test:debug example.spec.ts
 npm run test:headed example.spec.ts
 ```
 
+### Run cucumber tests
+
+```bash
+npm run test:cucumber
+```
+
 ## Test Structure
 
 ```

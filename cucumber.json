@@ -1,0 +1,14 @@
+{
+    "default": {
+        "formatOptions": {
+            "snippetInterface": "synchronous"
+        },
+        "paths": [
+            "features/"
+        ],
+        "require": [
+            "steps/*.ts"
+        ]
+    }
+}
+
