@@ -2,21 +2,26 @@
   "name": "pw-course",
   "version": "1.0.0",
   "main": "index.js",
-    "scripts": {
-      "test:all": "npx playwright test",
-      "test:ui": "npx playwright test --ui",
-      "test:headed": "npx playwright test $1 --headed",
-      "test:headed:all": "npx playwright test --headed",
-      "test:debug": "npx playwright test $1 --debug",
-      "test:report": "npx playwright show-report"
-    },
+  "scripts": {
+    "test:all": "npx playwright test",
+    "test:ui": "npx playwright test --ui",
+    "test:headed": "npx playwright test $1 --headed",
+    "test:headed:all": "npx playwright test --headed",
+    "test:debug": "npx playwright test $1 --debug",
+    "test:report": "npx playwright show-report",
+    "test:cucumber": "cucumber-js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@cucumber/cucumber": "^11.2.0",
     "@playwright/test": "^1.51.1",
-    "@types/node": "^22.10.2"
+    "@types/cucumber": "^7.0.3",
+    "@types/node": "^22.14.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
     "playwright": "^1.51.1"
